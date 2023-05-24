@@ -1,12 +1,35 @@
 
 import './App.css'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import axios from 'axios'
 
 
 function App() {
 
+  async function fetchData() {
+  try {
+    axios("http://localhost:3002/api/users").then((response) => {
+      console.log(response.data);
+    });
+  } catch (error) {
+    // Handle any network or request errors
+    console.error('Error:', error.message);
+  }
+}
 
+fetchData();
 
+async function loadMarkers() {
+  try {
+    axios("http://localhost:3002/api/markers").then((response) => {
+      console.log(response.data);
+    });
+  } catch (error) {
+    // Handle any network or request errors
+    console.error('Error:', error.message);
+  }
+}
+loadMarkers();
 
   return(
     <div style={{ width: '100%', height: '100vh' }}>
