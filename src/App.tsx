@@ -3,6 +3,7 @@ import './App.css'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { NameForm } from './NameForm'
 
 
 function App() {
@@ -27,6 +28,14 @@ function App() {
   }
   , []);
 
+  const editForm = (id: number) => {
+    axios.put(`http://localhost:3002/api/markers/${id}`, {
+      markerType: "test"
+    }).then((response) => {
+      console.log(response.data);
+    });
+  }
+
 
   return(
     <div style={{ width: '100%', height: '100vh' }}>
@@ -35,10 +44,14 @@ function App() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {markers.map((marker) => (
-          <Marker position={[marker.lat, marker.lng]}>
+        {markers.map((marker, index) => (
+          <Marker
+          key={index}
+          position={[marker.lat, marker.lng]}>
             <Popup>
-              {marker.data.markerType}
+              <NameForm
+                data={marker.data}
+               />
             </Popup>
           </Marker>
         ))}

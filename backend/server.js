@@ -4,7 +4,7 @@ const cors=require('cors');
 app.use(cors());
 app.use(express.json());
 
-
+const fs = require('fs');
 const { existsSync, readFile, writeFile } = require('fs');
 const http = require('http');
 const { resolve } = require('path');
@@ -56,6 +56,40 @@ app.get('/api/markers', (req, res) => {
       res.status(500).send('Error loading markers');
     });
 });
+
+// Update function
+function updateMarker(markerId, updatedData) {
+  const markers = loadMarkers(USER_MARKERS_PATH)
+  console.log("update", markers);
+  // Find the marker to update
+  const markerIndex = markers.findIndex((marker) => marker.id === markerId);
+  if (markerIndex !== -1) {
+    console.log("update", markerIndex);
+    // // Update the marker properties
+    // markers[markerIndex].markerType = updatedData.MarkerType;
+    
+    // // ... update other properties as needed
+
+    // // Write the updated markers back to the JSON file
+    // fs.writeFileSync('markers.json', JSON.stringify(markers, null, 2));
+
+    return true; // Return true to indicate successful update
+  }
+
+  return false; // Return false if marker not found
+}
+// PUT route for updating a marker
+app.put('/api/markers/:id', (req, res) => {
+  const markerId = req.params.id;
+  const updatedData = req.body; // Assuming the updated data is sent in the request body
+
+  if (updateMarker(markerId, updatedData)) {
+    res.status(200).json({ message: 'Marker updated successfully' });
+  } else {
+    res.status(404).json({ error: 'Marker not found' });
+  }
+});
+
 
 
 // Start the server
