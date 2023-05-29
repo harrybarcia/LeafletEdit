@@ -1,37 +1,56 @@
-import React from 'react';
-import axios from 'axios';
-export class NameForm extends React.Component {
-    constructor(props: any) {
-      super(props);
-      this.state = {value: props.data || ''};
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-  
-    handleChange(event: any) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event: any) {
-      event.preventDefault();
-      axios.put(`http://localhost:3002/api/markers/${id}`, {
-        markerType: this.state.value
-        }).then((response) => {
-        console.log(response.data);
-        }
-        );
+import { useEffect, useState } from 'react';
 
-    }
-  
-    render() {
-      return (
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input type="text" value={this.state.value.markerType} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      );
-    }
+function NameForm(props: any) {
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const marker = props.data
+  console.log(marker)
+
+  useEffect(() => {
+
+    setName(name);
+    setMessage(message)
+  }, [name, message])
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.onClosePopup();
+
+
   }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div style={{
+        "display": "flex","flexDirection": "column","padding": "1em"}}>
+      <label>
+        Name:
+        <input
+          type="text"
+          defaultValue={marker.markerType}
+          onChange={(e) => setName(e.target.value)}
+          style = {{"display": "flex"}}
+          
+        />
+      </label>
+
+      <label>
+        Message:
+        <textarea
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          style = {{"display": "flex"}}
+        ></textarea>
+      </label>
+      </div>
+
+      <button type="submit"
+      className="leaflet-popup-close-button"
+      
+      >Submit</button>
+    </form>
+  );
+}
+
+export default NameForm;
