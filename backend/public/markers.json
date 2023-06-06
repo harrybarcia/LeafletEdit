@@ -1,54 +1,22 @@
 [
-    {
-      "data": {
-        "markerType": "Animal",
-        "markerCustomSubType": "test",
-        "editable": true,
-        "uid": "10325277000000477"
-      },
-      "lat": 40.07976737085676,
-      "lng": -122.19422101974487
+  {
+    "data": {
+      "markerCustomSubType": "new",
+      "markerType": "Eagle",
+      "rating": "new"
     },
-    {
-      "data": {
-        "markerType": "Spade",
-        "markerCustomSubType": "sdsd",
-        "editable": true,
-        "uid": "11177707999999523"
-      },
-      "lat": 42.6437889060449,
-      "lng": -120.44422101974487
+    "lat": 43.8,
+    "lng": -118.05755297511413,
+    "uid": 14549340000009536
+  },
+  {
+    "data": {
+      "markerCustomSubType": "new",
+      "markerType": "Eagle",
+      "rating": "new"
     },
-    {
-      "data": {
-        "markerType": "Object",
-        "markerCustomSubType": "test4",
-        "editable": true,
-        "uid": "11515644399999976"
-      },
-      "lat": 44.70883860324821,
-      "lng": -129.5
-    },
-    {
-      "data": {
-        "markerType": "Star",
-        "markerCustomSubType": "test5 edit2",
-        "rating": "3",
-        "editable": true,
-        "uid": "14941889300000072"
-      },
-      "lat": 47.78125,
-      "lng": -117.84375
-    },
-    {
-      "data": {
-        "markerType": "Bird",
-        "markerSubType": "American Crow",
-        "markerDescription": "test6",
-        "editable": true,
-        "uid": "14549340000009537"
-      },
-      "lat": -96.82020785817024,
-      "lng": 147.05755297511413
-    }
-  ]
+    "lat": 43.8,
+    "lng": -118.05755297511413,
+    "uid": 14549340000009536
+  }
+]
