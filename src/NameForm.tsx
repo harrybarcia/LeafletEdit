@@ -2,34 +2,35 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function NameForm(props: any) {
-const [markerCustomSubType, setMarkerCustomSubType] = useState(props.data.markerCustomSubType)
-const [markerType, setMarkerType] = useState(props.data.markerType)
-const [rating, setRating] = useState(props.data.rating)
-const [lng, setLng] = useState([props.position][0][1])
-const [lat, setLat] = useState([props.position][0][0])
+  const {position, data, uid} = props
+  const [markerCustomSubType, setMarkerCustomSubType] = useState(data.markerCustomSubType)
+  const [markerType, setMarkerType] = useState(data.markerType)
+  const [rating, setRating] = useState(data.rating)
 
-  const marker = props.data
-  console.log(marker)
-  const updateMarker = async () => {
-    const res = await axios.post(`http://localhost:3002/api/markers/${marker.uid}`, {
-      data:{markerCustomSubType,
-      markerType,
-      rating},
-      lat,
-      lng,
-      uid:marker.uid
-    })
-    return res
+  console.log("data", data)
+  const handleSubmit = async (e: any) => {
+    const updateMarker = async () => {
+      try {
+        await axios.post(`http://localhost:3002/api/markers/${uid}`, {
+        data:{markerCustomSubType,
+        markerType,
+        rating},
+        lng:position[1],
+        lat:position[0],
+        uid
+        })
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    updateMarker()
 
-  }
-
-  const handleSubmit = (e:any) => {
     e.preventDefault();
     props.onClosePopup();
-    updateMarker();
-
-
   }
+    
+
+  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -39,7 +40,7 @@ const [lat, setLat] = useState([props.position][0][0])
         Type:
         <input
           type="text"
-          defaultValue={marker.markerType}
+          defaultValue={data.markerType}
           onChange={(e) => setMarkerType(e.target.value)}
           style = {{"display": "flex"}}
           
@@ -49,7 +50,7 @@ const [lat, setLat] = useState([props.position][0][0])
         markerCustomSubType:
         <input
           type="text"
-          defaultValue={marker.markerCustomSubType}
+          defaultValue={data.markerCustomSubType}
           onChange={(e) => setMarkerCustomSubType(e.target.value)}
           style = {{"display": "flex"}}
           
@@ -60,7 +61,7 @@ const [lat, setLat] = useState([props.position][0][0])
         rating:
         <input
           type="text"
-          defaultValue={marker.rating}
+          defaultValue={data.rating}
           onChange={(e) => setRating(e.target.value)}
           style = {{"display": "flex"}}
           

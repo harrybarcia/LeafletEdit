@@ -44,6 +44,7 @@ function App() {
             position={[marker.lat, marker.lng]}
             onClosePopup={mimicClose}
             data={marker.data}
+            uid={marker.uid}
             ></NameForm>
           </Popup>
             

@@ -62,18 +62,23 @@ app.post('/api/markers/:id', (req, res) => {
   console.log("put");
 
   const newData = req.body
+  console.log(newData)
 
   const markerId = parseInt(req.params.id);
   newData.uid = markerId
   const data = JSON.parse(fs.readFileSync(USER_MARKERS_PATH, 'utf8'));
   for (let i = 0; i < data.length; i++) {
-    const marker = data[i].data;
-    if (marker.uid === markerId) {
+    const markerUid = data[i].uid;
+    if (markerUid === markerId) {
+      console.log("for", i, markerUid === markerId )
       data[i] = newData
       break;
     }
   }
   fs.writeFileSync(USER_MARKERS_PATH, JSON.stringify(data, null, 2));
+  res.status(200).json({ message: 'Store updated!', data });
+
+  
 });
 
 

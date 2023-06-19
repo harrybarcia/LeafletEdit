@@ -12,11 +12,11 @@
   {
     "data": {
       "markerCustomSubType": "new",
-      "markerType": "Eagle",
+      "markerType": "Eagle test test",
       "rating": "new"
     },
+    "lng": -118.57,
     "lat": 43.8,
-    "lng": -118.05755297511413,
-    "uid": 14549340000009536
+    "uid": 14549340000009538
   }
 ]
