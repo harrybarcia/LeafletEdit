@@ -77,8 +77,6 @@ app.post('/api/markers/:id', (req, res) => {
   }
   fs.writeFileSync(USER_MARKERS_PATH, JSON.stringify(data, null, 2));
   res.status(200).json({ message: 'Store updated!', data });
-
-  
 });
 
 

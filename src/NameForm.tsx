@@ -7,7 +7,6 @@ function NameForm(props: any) {
   const [markerType, setMarkerType] = useState(data.markerType)
   const [rating, setRating] = useState(data.rating)
 
-  console.log("data", data)
   const handleSubmit = async (e: any) => {
     const updateMarker = async () => {
       try {
@@ -24,7 +23,6 @@ function NameForm(props: any) {
       }
     };
     updateMarker()
-
     e.preventDefault();
     props.onClosePopup();
   }
