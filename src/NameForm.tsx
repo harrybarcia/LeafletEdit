@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function NameForm(props: any) {
+
   const { position, data, uid } = props
+  console.log(position)
   const [markerCustomSubType, setMarkerCustomSubType] = useState(data.markerCustomSubType)
   const [markerType, setMarkerType] = useState(data.markerType)
   const [rating, setRating] = useState(data.rating)
-
+  
   const handleSubmit = async (e: any) => {
     const updateMarker = async () => {
       try {
@@ -28,11 +30,18 @@ function NameForm(props: any) {
     e.preventDefault();
     props.onClosePopup();
   }
+  console.log(position[0])
   const createMarker = async (marker:object) => {
     try {
       await axios.post('http://localhost:3002/api/markers/', {
-        method:'POST', body:{
-          '1':'test'}
+        data: {
+          markerCustomSubType,
+          markerType,
+          rating
+        },
+        lng: position.lng,
+        lat: position.lat,
+        uid:'1'
       })
     } catch{
       ((err:object) => {console.log(err)})

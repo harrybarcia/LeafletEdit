@@ -56,6 +56,7 @@ function DraggableMarker() {
             : 'Click here to make marker draggable'}
         </span>
         <NameForm
+            position={position}
             data={""}
             uid={""}
             ></NameForm>
