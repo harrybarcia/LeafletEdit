@@ -60,7 +60,6 @@ app.get('/api/markers', (req, res) => {
 
 app.post('/api/markers/:id', (req, res) => {
   console.log("put");
-
   const newData = req.body
   console.log(newData)
 
@@ -77,6 +76,18 @@ app.post('/api/markers/:id', (req, res) => {
   }
   fs.writeFileSync(USER_MARKERS_PATH, JSON.stringify(data, null, 2));
   res.status(200).json({ message: 'Store updated!', data });
+});
+
+app.post('/api/markers/', (req, res) => {
+  const newData = req.body
+  console.log(newData)
+
+  writeFile(USER_MARKERS_PATH, JSON.stringify(newData), (err) => {
+    if (err) reject(err);
+    else resolve(JSON.stringify(newData));
+  })
+  res.status(200).json({message:'Store updated!', newData})
+  
 });
 
 

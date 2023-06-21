@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function NameForm(props: any) {
-  const {position, data, uid} = props
+  const { position, data, uid } = props
   const [markerCustomSubType, setMarkerCustomSubType] = useState(data.markerCustomSubType)
   const [markerType, setMarkerType] = useState(data.markerType)
   const [rating, setRating] = useState(data.rating)
@@ -11,12 +11,14 @@ function NameForm(props: any) {
     const updateMarker = async () => {
       try {
         await axios.post(`http://localhost:3002/api/markers/${uid}`, {
-        data:{markerCustomSubType,
-        markerType,
-        rating},
-        lng:position[1],
-        lat:position[0],
-        uid
+          data: {
+            markerCustomSubType,
+            markerType,
+            rating
+          },
+          lng: position[1],
+          lat: position[0],
+          uid
         })
       } catch (error) {
         console.error("Error:", error);
@@ -26,53 +28,60 @@ function NameForm(props: any) {
     e.preventDefault();
     props.onClosePopup();
   }
-    
-
-  
+  const createMarker = async (marker:object) => {
+    try {
+      await axios.post('http://localhost:3002/api/markers/', {
+        method:'POST', body:{
+          '1':'test'}
+      })
+    } catch{
+      ((err:object) => {console.log(err)})
+    }
+  }
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <div style={{
-        "display": "flex","flexDirection": "column","padding": "1em"}}>
-      <label>
-        Type:
-        <input
-          type="text"
-          defaultValue={data.markerType}
-          onChange={(e) => setMarkerType(e.target.value)}
-          style = {{"display": "flex"}}
-          
-        />
-      </label>
-      <label>
-        markerCustomSubType:
-        <input
-          type="text"
-          defaultValue={data.markerCustomSubType}
-          onChange={(e) => setMarkerCustomSubType(e.target.value)}
-          style = {{"display": "flex"}}
-          
-        />
-      </label>
-      
-      <label>
-        rating:
-        <input
-          type="text"
-          defaultValue={data.rating}
-          onChange={(e) => setRating(e.target.value)}
-          style = {{"display": "flex"}}
-          
-        />
-      </label>
-
+        "display": "flex", "flexDirection": "column", "padding": "1em"
+      }}>
+        <label>
+          Type:
+          <input
+            type="text"
+            defaultValue={data.markerType}
+            onChange={(e) => setMarkerType(e.target.value)}
+            style={{ "display": "flex" }}
+          />
+        </label>
+        <label>
+          markerCustomSubType:
+          <input
+            type="text"
+            defaultValue={data.markerCustomSubType}
+            onChange={(e) => setMarkerCustomSubType(e.target.value)}
+            style={{ "display": "flex" }}
+          />
+        </label>
+        <label>
+          rating:
+          <input
+            type="text"
+            defaultValue={data.rating}
+            onChange={(e) => setRating(e.target.value)}
+            style={{ "display": "flex" }}
+          />
+        </label>
       </div>
-
       <button type="submit"
-      className="closeOnSubmit"
-      
+        className="closeOnSubmit"
       >Submit</button>
     </form>
+      <button type="submit"
+        className="closeOnSubmit"
+        onClick={createMarker}
+      >Submit the new Marker</button>
+      </>
   );
 }
 

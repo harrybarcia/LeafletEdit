@@ -4,13 +4,13 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import axios from 'axios'
 import NameForm from './NameForm'
 import React, { useState, useEffect } from "react";
+import DraggableMarker from './DraggableMarker'
+import ExampleComponent from './MyComponent'
 
 function App() {
   const [markers, setMarkers] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMarkers, setFilteredMarkers] = useState<any[]>([]);
-
-
 
   const mimicClose = () => {
     const popupclose = document.querySelector('.leaflet-popup-close-button')
@@ -18,7 +18,6 @@ function App() {
     closeOnSubmit && popupclose?.dispatchEvent(new Event('click'))
     fetchData();
     setSearchTerm('');
-
   };
 
   useEffect(() => {
@@ -51,13 +50,15 @@ function App() {
 
     });
   }
-  
+
   return(
     <div style={{ width: '100%', height: '70vh' }}>
-      <MapContainer center={[45, -123]} zoom={5} style={{ width: '100%', height: '100%' }} >
+      <MapContainer center={[45, -123]} zoom={5} style={{ width: '100%', height: '100%' }} 
+      >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
         />
 
         { filteredMarkers.map((marker, index) => (
@@ -75,6 +76,8 @@ function App() {
             
           </Marker>
         ))}
+        <DraggableMarker></DraggableMarker>
+     
       </MapContainer>
       <div>
         <button
@@ -96,6 +99,7 @@ function App() {
           onChange={handleSearch}
         />
       </div>
+      <ExampleComponent></ExampleComponent>
 
     </div>
   )
