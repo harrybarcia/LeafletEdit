@@ -1,6 +1,7 @@
 import { useMapEvents, Marker, Popup } from "react-leaflet";
 import { useState, useMemo, useRef, useCallback } from "react";
 import NameForm from "./NameForm";
+import axios from "axios";
 
 function DraggableMarker() {
 
@@ -8,6 +9,10 @@ function DraggableMarker() {
     lat: 48,
     lng: -123.09,
   }
+  const markerCustomSubType = "test";
+  const markerType = "test";
+  const rating = "test"
+
   const map = useMapEvents({
     click: (e) => {
       const { lat, lng } = e.latlng;
@@ -25,6 +30,22 @@ function DraggableMarker() {
       });
     }
   });
+  const createMarker = async (marker:object) => {
+    try {
+      await axios.post('http://localhost:3002/api/markers/', {
+        data: {
+          markerCustomSubType,
+          markerType,
+          rating
+        },
+        lng: position.lng,
+        lat: position.lat,
+        uid:'1'
+      })
+    } catch{
+      ((err:object) => {console.log(err)})
+    }
+  };
   const [draggable, setDraggable] = useState(false)
   const [position, setPosition] = useState(center)
   const markerRef = useRef(null)
@@ -35,6 +56,8 @@ function DraggableMarker() {
         if (marker != null) { 
           console.log(marker.getLatLng())
           setPosition(marker.getLatLng())
+
+          createMarker(marker);
         }
       },
     }),
