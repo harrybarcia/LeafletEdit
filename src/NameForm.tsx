@@ -30,23 +30,6 @@ function NameForm(props: any) {
     e.preventDefault();
     props.onClosePopup();
   }
-  console.log(position[0])
-  const createMarker = async (marker:object) => {
-    try {
-      await axios.post('http://localhost:3002/api/markers/', {
-        data: {
-          markerCustomSubType,
-          markerType,
-          rating
-        },
-        lng: position.lng,
-        lat: position.lat,
-        uid:'1'
-      })
-    } catch{
-      ((err:object) => {console.log(err)})
-    }
-  }
 
   return (
     <>
@@ -88,7 +71,7 @@ function NameForm(props: any) {
     </form>
       <button type="submit"
         className="closeOnSubmit"
-        onClick={createMarker}
+        onClick={props.saveMarker}
       >Submit the new Marker</button>
       </>
   );

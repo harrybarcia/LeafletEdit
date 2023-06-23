@@ -21,7 +21,6 @@ function App() {
   };
 
   useEffect(() => {
-
     if (searchTerm.length > 0 ){
       const markersFiltered = markers.filter((marker)=>marker.data.markerType.startsWith(searchTerm.trim()))
       console.log(markersFiltered) // renvoi un tableau vide quand je rééffectue une recherche
@@ -30,8 +29,6 @@ function App() {
       setFilteredMarkers(markers);
     }
   }, [searchTerm])
-  console.log(searchTerm)
-
   useEffect(() => {
     fetchData()
   }, [])
@@ -47,9 +44,9 @@ function App() {
     axios("http://localhost:3002/api/markers").then((response) => {
       setMarkers(response.data);
       setFilteredMarkers(response.data);
-
     });
   }
+console.log(markers)
 
   return(
     <div style={{ width: '100%', height: '70vh' }}>
@@ -76,7 +73,9 @@ function App() {
             
           </Marker>
         ))}
-        <DraggableMarker></DraggableMarker>
+        <DraggableMarker
+        data={markers}
+        ></DraggableMarker>
      
       </MapContainer>
       <div>

@@ -1,18 +1,23 @@
 import { useMapEvents, Marker, Popup } from "react-leaflet";
-import { useState, useMemo, useRef, useCallback } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import NameForm from "./NameForm";
 import axios from "axios";
 
-function DraggableMarker() {
-
+function DraggableMarker(props:any) {
+  const [markers, setMarkers] = useState([])
+  const [newMarkers, setNewMarkers] = useState([])
+  useEffect(() => {
+    // Access the updated state here
+    setMarkers(props.data)
+  }, [markers]);
+  console.log("markers qd le component et monté", markers)
   const center = {
     lat: 48,
     lng: -123.09,
   }
   const markerCustomSubType = "test";
   const markerType = "test";
-  const rating = "test"
-
+  const rating = "test";
   const map = useMapEvents({
     click: (e) => {
       const { lat, lng } = e.latlng;
@@ -30,22 +35,18 @@ function DraggableMarker() {
       });
     }
   });
-  const createMarker = async (marker:object) => {
-    try {
-      await axios.post('http://localhost:3002/api/markers/', {
-        data: {
-          markerCustomSubType,
-          markerType,
-          rating
-        },
-        lng: position.lng,
-        lat: position.lat,
-        uid:'1'
-      })
-    } catch{
-      ((err:object) => {console.log(err)})
-    }
-  };
+  const saveData = async () =>{
+    await axios.post('http://localhost:3002/api/markers/', {
+     newMarkers
+    })
+    .then((response) => {
+      console.log("Markers saved successfully!");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
   const [draggable, setDraggable] = useState(false)
   const [position, setPosition] = useState(center)
   const markerRef = useRef(null)
@@ -53,19 +54,33 @@ function DraggableMarker() {
     () => ({
       dragend() {
         const marker = markerRef.current
+        alert("stop")
         if (marker != null) { 
           console.log(marker.getLatLng())
           setPosition(marker.getLatLng())
-
-          createMarker(marker);
+          const newMarker = {
+            "test":"test"
+          }
+          console.log("markers dans la fonction dragend", markers)
+          setNewMarkers([...markers, newMarker]);
         }
       },
     }),
-    [],
+    [markers],
   )
+    
   const toggleDraggable = useCallback(() => {
     setDraggable((d) => !d)
   }, [])
+
+  useEffect(() => {
+    if (newMarkers.length>0){
+      saveData()
+    }
+   
+  } , [newMarkers])
+
+  console.log("newMarkers", newMarkers)
   return (
     <Marker
       draggable={draggable}
@@ -79,6 +94,7 @@ function DraggableMarker() {
             : 'Click here to make marker draggable'}
         </span>
         <NameForm
+            saveMarker={saveData}
             position={position}
             data={""}
             uid={""}
