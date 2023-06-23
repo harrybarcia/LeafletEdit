@@ -47,30 +47,40 @@ function DraggableMarker(props:any) {
     });
   }
 
+  const sortedMarkers = markers.sort((a, b) => a.uid - b.uid);
+  const lastUid = sortedMarkers[sortedMarkers.length - 1]?.uid;
+  
+console.log("sorted", sortedMarkers)
   const [draggable, setDraggable] = useState(false)
   const [position, setPosition] = useState(center)
   const markerRef = useRef(null)
+  const popupRef = useRef(null) 
+  const [draggedMarker, setDraggedMarker] = useState(0)
   const eventHandlers = useMemo(
     () => ({
       dragend() {
         const marker = markerRef.current
         if (marker != null) { 
-          console.log(marker.getLatLng())
-          setPosition(marker.getLatLng())
-          const newMarker = 
-             {
-              "data": {
-                "markerCustomSubType": "new",
-                "markerType": "Fourmie",
-                "rating": "new"
-              },
-              "lng": marker.getLatLng().lng,
-              "lat": marker.getLatLng().lat,
-              "uid": 14549340000009536
-            }
+            // Get the marker's index
+            setDraggedMarker(marker);
+            marker.openPopup(); // Open the popup associated with the dragged marker
+
+          // console.log(marker.getLatLng())
+          // setPosition(marker.getLatLng())
+          // const newMarker = 
+          //    {
+          //     "data": {
+          //       "markerCustomSubType": "new",
+          //       "markerType": "Fourmie",
+          //       "rating": "new"
+          //     },
+          //     "lng": marker.getLatLng().lng,
+          //     "lat": marker.getLatLng().lat,
+          //     "uid": lastUid+1
+          //   }
           
-          console.log("markers dans la fonction dragend", markers)
-          setNewMarkers([...markers, newMarker]);
+          // console.log("markers dans la fonction dragend", markers)
+          // setNewMarkers([...markers, newMarker]);
         }
       },
     }),
@@ -88,6 +98,14 @@ function DraggableMarker(props:any) {
    
   } , [newMarkers])
 
+  useEffect(() => {
+    console.log(draggedMarker)
+    console.log(popupRef.current)
+    if (draggedMarker && popupRef.current) {
+      popupRef.current.openPopup();
+    }
+  }, [draggedMarker]);
+
   console.log("newMarkers", newMarkers)
   return (
     <Marker
@@ -95,18 +113,20 @@ function DraggableMarker(props:any) {
       eventHandlers={eventHandlers}
       position={position}
       ref={markerRef}>
-      <Popup minWidth={90}>
+      <Popup minWidth={90} ref={popupRef}  >
         <span onClick={toggleDraggable}>
           {draggable
             ? 'Marker is draggable'
             : 'Click here to make marker draggable'}
         </span>
-        <NameForm
+        {draggedMarker && (
+          <NameForm
             saveMarker={saveData}
             position={position}
+            marker={draggedMarker}
             data={""}
-            uid={""}
-            ></NameForm>
+          />
+        )}
       </Popup>
     </Marker>
   );

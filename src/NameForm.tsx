@@ -5,7 +5,7 @@ function NameForm(props: any) {
 
   const { position, data, uid } = props
   console.log(position)
-  const [markerCustomSubType, setMarkerCustomSubType] = useState(data.markerCustomSubType)
+  const [markerCustomSubType, setMarkerCustomSubType] = useState(data.markerCustomSubType?data.markerCustomSubType:"test")
   const [markerType, setMarkerType] = useState(data.markerType)
   const [rating, setRating] = useState(data.rating)
   
