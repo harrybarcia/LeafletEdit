@@ -79,7 +79,7 @@ app.post('/api/markers/:id', (req, res) => {
 });
 
 app.post('/api/markers/', (req, res) => {
-  const newData = req.body
+  const newData = req.body.newMarkers
   writeFile(USER_MARKERS_PATH, JSON.stringify(newData), (err) => {
     if (err) reject(err);
     else resolve(JSON.stringify([newData]));

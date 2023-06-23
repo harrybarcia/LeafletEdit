@@ -54,13 +54,21 @@ function DraggableMarker(props:any) {
     () => ({
       dragend() {
         const marker = markerRef.current
-        alert("stop")
         if (marker != null) { 
           console.log(marker.getLatLng())
           setPosition(marker.getLatLng())
-          const newMarker = {
-            "test":"test"
-          }
+          const newMarker = 
+             {
+              "data": {
+                "markerCustomSubType": "new",
+                "markerType": "Fourmie",
+                "rating": "new"
+              },
+              "lng": marker.getLatLng().lng,
+              "lat": marker.getLatLng().lat,
+              "uid": 14549340000009536
+            }
+          
           console.log("markers dans la fonction dragend", markers)
           setNewMarkers([...markers, newMarker]);
         }
