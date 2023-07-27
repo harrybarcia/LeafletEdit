@@ -1,1 +1,42 @@
-[{"data":{"markerCustomSubType":"new","markerType":"Fourmie","rating":"new"},"lng":-111,"lat":51,"uid":1},{"data":{"markerCustomSubType":"new","markerType":"Eagle test test","rating":"new"},"lng":-118.57,"lat":43.8,"uid":2},{"data":{"markerCustomSubType":"new","markerType":"Fourmie 6","rating":"new"},"lng":-111.92871093750001,"lat":51.208221952012366,"uid":3},{"data":{"markerCustomSubType":"new","markerType":"Fourmie","rating":"new"},"lng":-113.8623046875,"lat":47.00980020177241,"uid":4}]
+[
+  {
+    "data": {
+      "markerCustomSubType": "new",
+      "markerType": "Fourmie",
+      "rating": "new"
+    },
+    "lng": -111,
+    "lat": 51,
+    "uid": 1
+  },
+  {
+    "data": {
+      "markerCustomSubType": "new",
+      "markerType": "Eagle test test",
+      "rating": "new"
+    },
+    "lng": -118.57,
+    "lat": 43.8,
+    "uid": 2
+  },
+  {
+    "data": {
+      "markerCustomSubType": "new",
+      "markerType": "Fourmie 6",
+      "rating": "new"
+    },
+    "lng": -111.92871093750001,
+    "lat": 51.208221952012366,
+    "uid": 3
+  },
+  {
+    "data": {
+      "markerCustomSubType": "new",
+      "markerType": "Fourmie",
+      "rating": "new"
+    },
+    "lng": -113.8623046875,
+    "lat": 47.00980020177241,
+    "uid": 4
+  }
+]
