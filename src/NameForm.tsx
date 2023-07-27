@@ -32,8 +32,10 @@ function NameForm(props: any) {
     e.preventDefault();
     props.onClosePopup();
   } 
-  const handleEditClick = () => {
+  const handleEditClick = (e:any) => {
+    e.stopPropagation();
     setEditMode(true);
+
   };
 
   return (
